@@ -1,0 +1,25 @@
+#!/bin/sh
+if [ "$#" -ge "2" ]; then
+	if [ "$1" = "-c" ]; then
+		echo "Using colorz backend"
+		wal --backend colorz -n -i "$2"
+	elif [ "$1" = "-w" ]; then
+		echo "Using wal backend"
+		wal --backend wal -n -i "$2"
+	elif [ "$1" = "-h" ]; then
+		echo "Using haishoku backend"
+		wal --backend haishoku -n -i "$2"
+	elif [ "$1" = "-t" ]; then
+		echo "Using colorthief backend"
+		wal --backend colorthief -n -i "$2"
+	elif [ "$1" = "-s" ]; then
+		echo "Using colorthief backend"
+		wal --backend schemer2 -n -i "$2"
+	fi 
+else
+	printf "Backend to use: "; read backend
+	wal --backend $backend -n -i "$1"
+fi
+	feh --bg-fill `cat "${HOME}/.cache/wal/wal"`
+	sh "${HOME}/.cache/wal/colors.sh"
+	cp "${HOME}/.cache/wal/colors.zathurarc" "${HOME}/.config/zathura/zathurarc"

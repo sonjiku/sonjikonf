@@ -1,0 +1,39 @@
+#!/bin/sh
+
+
+acpower=$(cat /sys/class/power_supply/AC/online)
+
+if [ "$acpower" -eq "0" ]; then
+
+	batlevel=$(cat /sys/class/power_supply/BAT0/capacity)
+	uid="$(id -u "$LOGNAME")"
+	export uid
+	export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
+	if [ "$batlevel" -le "5" ]; then
+		echo "Shutting down the because device is at $batlevel%"
+		action=$(dunstify -a "Battery" -u normal -i battery-empty-symbolic -r "847420" --action="default,Reply" "Battery lower than 5%. Should we poweroff?")
+		case $action in
+			default)
+				poweroff;;
+			1)
+				poweroff;;
+		esac
+	elif [ "$batlevel" -gt "5" ] && [ "$batlevel" -le "20" ]; then
+		echo "Device is at $batlevel%"
+		dunstify -a "Battery" -u normal -i battery-caution-symbolic -r "847420" --action="default,Reply" "At $batlevel%"
+	elif [ "$batlevel" -gt "20" ] && [ "$batlevel" -le "40" ]; then
+		echo "Device is at $batlevel%"
+		dunstify -a "Battery" -u normal -i battery-caution-symbolic -r "847420" --action="default,Reply" "At $batlevel%"
+	fi
+elif [ "$acpower" -eq "1" ]; then
+	batlevel=$(cat /sys/class/power_supply/BAT0/capacity)
+	uid="$(id -u "$LOGNAME")"
+	export uid
+	export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
+	if [ "$batlevel" -gt "80" ] && [ "$batlevel" -le "100" ]; then
+		dunstify -a "Battery" -u normal -i battery-caution-symbolic -r "847420" --action="default,Reply" "At $batlevel%"
+	elif [ "$batlevel" = "100" ]; then
+		echo "Device is at $batlevel%"
+		dunstify -a "Battery" -u normal -i battery-caution-symbolic -r "847420" --action="default,Reply" "Fully Charged"
+	fi
+fi

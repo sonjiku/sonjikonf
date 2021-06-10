@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ ! -z "$DISPLAY" ] ; then
+	if [  -z "$TERM" ] ; then
+		wal -R
+		feh --bg-fill `cat "${HOME}/.cache/wal/wal"`
+	else
+		cat ~/.cache/wal/sequences 
+	fi
+fi

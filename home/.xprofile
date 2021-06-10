@@ -1,0 +1,13 @@
+#!/.bin/sh
+if command -v mpd >/dev/null 2>&1 ;then
+	mopidy &
+fi
+if command -v wal >/dev/null 2>&1 ;then
+	walar &
+fi
+if command -v picom >/dev/null 2>&1 ;then
+	picom &
+fi
+xkbmap
+xbindkeys -p
+QT_STYLE_OVERRIDE=kvantum

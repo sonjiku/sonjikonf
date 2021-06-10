@@ -1,0 +1,5 @@
+HELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+MAILTO=root
+*/5 *   * * * batnot
+*   */6 * * * usrdircp

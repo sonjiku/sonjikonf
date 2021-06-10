@@ -1,0 +1,6 @@
+configuration {
+	modi: "window,emoji,run,ssh,combi";
+	font: "NotoSans 14";
+	combi-modi: "window,run,ssh";
+}
+@import "~/.cache/wal/colors-rofi-dark.rasi"

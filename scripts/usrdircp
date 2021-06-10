@@ -1,0 +1,4 @@
+#!/bin/sh
+find /home/ -wholename '/*/.bin/**' -type f -exec cp -f {} /usr/local/bin \;
+find /home/ -wholename '/*/WP/**' -type f -exec mv -f {} /usr/share/pixmaps/Wallpapers \;
+echo "Synced system wallpapers and local executables"

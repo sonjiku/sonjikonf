@@ -1,0 +1,287 @@
+[colors]
+fg0				=	${xrdb:color0:#0a0f14}
+fg1				=	${xrdb:color9:#c2272f}
+fg2				=	${xrdb:color10:#188ca0}
+fg3				=	${xrdb:color11:#fcc15f}
+fg4				=	${xrdb:color12:#081f2d}
+fg5				=	${xrdb:color13:#30334b}
+fg6				=	${xrdb:color14:#6e53a0}
+fg7				=	${xrdb:color7:#98d1ce}
+fg8				=	${xrdb:color8:#10151b}
+fg9				=	${xrdb:color1:#d85e64}
+fg10			=	${xrdb:color2:#6ee2f7}
+fg11			=	${xrdb:color3:#e07360}
+fg12			=	${xrdb:color4:#21506e}
+fg13			=	${xrdb:color5:#888ba6}
+fg14			=	${xrdb:color6:#b39bc8}
+fg15			=	${xrdb:color15:#d3ebe9}
+bg0				=	${xrdb:color0_alpha}
+bg1				=	${xrdb:color9_alpha}
+bg2				=	${xrdb:color10_alpha}
+bg3				=	${xrdb:color11_alpha}
+bg4				=	${xrdb:color12_alpha}
+bg5				=	${xrdb:color13_alpha}
+bg6				=	${xrdb:color14_alpha}
+bg7				=	${xrdb:color7_alpha}
+bg8				=	${xrdb:color8_alpha}
+bg9				=	${xrdb:color1_alpha}
+bg10			=	${xrdb:color2_alpha}
+bg11			=	${xrdb:color3_alpha}
+bg12			=	${xrdb:color4_alpha}
+bg13			=	${xrdb:color5_alpha}
+bg14			=	${xrdb:color6_alpha}
+bg15			=	${xrdb:color15_alpha}
+
+[vars]
+mainhght	=	25
+muschght	=	20
+
+
+
+[bar/main]
+width				=	100%
+height				=	${vars.mainhght}
+enable-ipc			=	true
+align			=	center
+fixed-center		=	true
+font-0				=	NotoSans:weight=Bold:size=12;0
+	font-1			=	NotoSans Nerd Font:weight=Bold:size=14;0
+foreground			=	${colors.fg15}
+background			=	${colors.bg0}
+line-size			=	0
+	line-color		=	${colors.fg8}
+padding				=	1
+module-margin		=	2
+	modules-left	=	i3
+	modules-center	=	xwindow
+	modules-right	=	rootfs homefs memory cpu backlight battery date
+
+[bar/music]
+width				=	100%
+height				=	20
+enable-ipc			=	true
+bottom				=	true
+	fixed-center	=	true
+font-0				=	NotoSans:weight=Bold:size=12;0
+	font-1			=	NotoSans Nerd Font:weight=Bold:size=14;0
+	font-2			=	Anonymice Nerd Font
+	font-3			=	Hack Nerd Font:size=15;0
+border-size			=	0
+	border-color	=	${colors.fg0} 
+	foreground		=	${colors.fg15}
+	background		=	${colors.bg0}
+padding				=	1
+tray-position		=	right
+	tray-padding	=	2
+	tray-background			=	${colors.bg0}
+module-margin	=	5
+	modules-center		=	volume mpd cava
+
+
+
+
+
+[module/i3]
+type							=	internal/i3
+format							=	<label-state> <label-mode>
+index-sort						=	true
+wrapping-scroll					=	false
+pin-workspaces					=	true
+strip-wsnumbers					=	true
+label-mode-padding				=	2
+	label-mode-foreground		=	${colors.fg3}
+	label-mode-background		=	${colors.bg0}
+label-focused					=	%name%
+	label-focused-foreground	=	${colors.fg15}
+	label-focused-background	=	${colors.bg0}
+	label-focused-underline		=	${colors.bg0}
+	label-focused-padding		=	2
+label-unfocused					=	%name%
+	label-unfocused-foreground	=	${colors.fg8}
+	label-unfocused-background	=	${colors.bg0}
+	label-unfocused-underline	=	${colors.bg0}
+	label-unfocused-padding		=	2
+label-visible					=	%name%
+	label-visible-background	=	${colors.bg0}
+	label-visible-underline		=	${colors.fg0}
+	label-visible-padding		=	2
+label-urgent					=	%name%
+	label-urgent-foreground		=	${colors.fg1}
+	label-urgent-background		=	${colors.bg0}
+	label-urgent-underline		=	${colors.bg0}
+	label-urgent-padding		=	2
+
+[module/xwindow]
+type				=	internal/xwindow
+label				=	%title%
+label-foreground	=	${colors.fg3}
+label-padding		=	2
+label-maxlen		=	50
+label-ellipsis		=	true
+
+[module/rootfs]
+type							=	internal/fs
+format-mounted					=	<label-mounted>
+format-unmounted				=	<label-unmounted>
+interval						=	300
+mount-0							=	/
+label-mounted					=	${env:PBAR_L_MROOT}
+	format-mounted-foreground	=	${colors.fg3}
+	format-mounted-underline	=	${colors.fg1}
+label-unmounted					=	${env:PBAR_L_UHOME}
+	format-unmounted-foreground	=	${colors.fg3}
+	format-unmounted-underline	=	${colors.fg1}
+
+[module/homefs]
+type							=	internal/fs
+interval						=	120
+mount-0							=	/home
+format-mounted					=	<label-mounted>
+label-mounted					=	${env:PBAR_L_MHOME}
+	format-mounted-foreground	=	${colors.fg6}
+	format-mounted-underline	=	${colors.fg1}
+format-unmounted				=	<label-unmounted>
+label-unmounted					=	${env:PBAR_L_UHOME}
+	format-unmounted-foreground	=	${colors.fg3}
+	format-unmounted-underline	=	${colors.fg1}
+
+[module/memory]
+type						=	internal/memory
+interval					=	5
+format-suffix				=	"  "
+format-underline			=	${colors.fg2}
+format-suffix-foreground	=	${colors.fg2}
+format-foreground			=	${colors.fg3}
+label						=	"%gb_used%/%gb_total%"
+
+[module/cpu]
+type						=	internal/cpu
+interval					=	1
+format-suffix				=	"  ﬙"
+format-underline			=	${colors.bg4}
+format-suffix-foreground	=	${colors.fg4}
+format-foreground			=	${colors.fg3}
+label						=	"%percentage:2%%"
+
+
+[module/backlight]
+type = internal/backlight
+card = amdgpu_bl0
+enable-scroll = true
+format = <label><ramp>
+label = %percentage%%
+label-foreground		=	${colors.fg3}
+ramp-0	=	"  "
+ramp-1	=	"  "
+ramp-2	=	"  "
+ramp-3	=	"  "
+ramp-4	=	"  "
+ramp-5	=	"  "
+ramp-6	=	"  "
+ramp-foreground		=	${colors.fg5}
+
+
+[module/battery]
+type = internal/battery
+full-at = 99
+battery = BAT0
+left-click		=	exec i3-sensible-terminal -e sudo powertop
+adapter			=	AC
+poll-interval = 5
+format-charging = <label-charging> <animation-charging>
+label-charging = %percentage%%
+format-discharging = <label-discharging> <ramp-capacity>
+label-discharging = %percentage%%
+format-full = <label-full> <ramp-capacity>
+label-full = %percentage%%
+ramp-capacity-0					=	"  "
+ramp-capacity-1					=	"  "
+ramp-capacity-2					=	"  "
+ramp-capacity-3					=	"  "
+ramp-capacity-4					=	"  "
+ramp-capacity-5					=	"  "
+ramp-capacity-6					=	"  "
+ramp-capacity-7					=	"  "
+ramp-capacity-8					=	"  "
+ramp-capacity-9					=	"  "
+ramp-capacity-10				=	"  "
+animation-charging-0			=	"  "
+animation-charging-1			=	"  "
+animation-charging-2			=	"  "
+animation-charging-3			=	"  "
+animation-charging-4			=	"  "
+animation-charging-framerate	=	750
+format-charging-underline		=	${colors.bg6}
+format-discharging-underline	=	${colors.bg6}
+format-full-underline			=	${colors.bg6}
+ramp-capacity-foreground		=	${colors.fg6}
+animation-charging-foreground	=	${colors.fg6}
+label-charging-foreground		=	${colors.fg3}
+label-discharging-foreground	=	${colors.fg3}
+label-full-foreground			=	${colors.fg3}
+
+[module/date]
+type = custom/script
+format-suffix				=	"  "
+exec						=	~/.config/polybar/scripts/calendar.sh
+interval					=	5
+click-left					=	~/.config/polybar/scripts/calendar.sh --popup &
+format-underline			=	${colors.bg7}
+format-suffix-foreground	=	${colors.fg7}
+format-foreground			=	${colors.fg3}
+
+[module/volume]
+type							=	internal/pulseaudio
+format-volume = <ramp-volume> <label-volume>
+use-ui-max						=	false
+ramp-volume-0					=	婢 
+ramp-volume-1					=	奄
+ramp-volume-2					=	奔
+ramp-volume-3					=	墳 
+ramp-volume-foreground			=	${colors.fg4}
+interval						=	5
+click-right						=	pavucontrol
+label-volume					=	%percentage%
+	label-volume-foreground		=	${colors.fg3}
+label-muted						=	ﱝ
+	label-muted-foreground		=	${colors.fg1}
+
+[module/mpd]
+type									=	internal/mpd
+format-online							=	<label-song> <icon-prev> <toggle> <icon-next>
+format-offline							=	mpd is offline
+icon-prev								=	玲
+	icon-prev-foreground				=	${colors.fg3}
+icon-stop								=	栗
+	icon-stop-foreground				=	${colors.fg1}
+icon-play								=	契
+	icon-play-foreground				=	${colors.fg1}
+icon-pause								=	
+	icon-pause-foreground				=	${colors.fg1}
+icon-next								=	怜
+	icon-next-foreground				=	${colors.fg3}
+label-song								=	${env:PBAR_L_SONG}
+label-song-foreground					=	${colors.fg15}
+	label-song-maxlen					=	100
+	label-song-ellipsis					=	true
+bar-progress-width						=	45
+	bar-progress-indicator				=	"  "
+	bar-progress-indicator-foreground	=	${colors.fg11}
+	bar-progress-indicator-background	=	${colors.fg11}
+	bar-progress-fill					=	"  " 
+	bar-progress-fill-foreground		=	${colors.fg3}
+	bar-progress-fill-background		=	${colors.fg3}
+	bar-progress-empty					=	"  " 
+	bar-progress-empty-foreground		=	${colors.fg0}
+	bar-progress-empty-background		=	${colors.bg8}
+
+[module/cava]
+type = custom/script
+tail = true
+exec = $HOME/.config/polybar/scripts/cava.sh
+format = <label>
+format-font = 5
+label = %output%
+
+
+;#vim:filetype=dosini

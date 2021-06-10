@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Terminate other instances
+killall -q csmst
+
+# Wait till proccesses dead
+while pgrep -x "cmst" >/dev/null; do sleep 1; done
+until pgrep -x "polybar" >/dev/null; do sleep 1; done
+
+#Wait till polybar reboots
+
+# Launch dunst
+cmst -m

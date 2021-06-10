@@ -1,0 +1,37 @@
+#!/bin/sh
+
+if [ -d "${HOME}/sonjiku-git/sonjiconf/home" ]; then
+	rm -rf "${HOME}/sonjiku-git/sonjiconf/home"
+fi
+if [ -d "${HOME}/sonjiku-git/sonjiconf/home" ]; then
+	rm -rf "${HOME}/sonjiku-git/sonjiconf/scripts"
+fi
+mkdir -v "${HOME}/sonjiku-git/sonjiconf/home"
+# Copy homedir files
+echo "Copying dotfiles"
+find "${HOME}" -maxdepth 1 -name ".*" -type f -exec cp {} "${HOME}/sonjiku-git/sonjiconf/home" \;
+for f in Xauthority dmrc fehbg fzf.bash gitconfig npmrc pulse-cookie steampath steampid viminfo xsession-errors xsession-errors.old yarnrc zcompdump; do
+	if [ -f "${HOME}/sonjiku-git/sonjiconf/home/.${f}" ]; then
+		rm -rf "${HOME}/sonjiku-git/sonjiconf/home/.${f}"
+	fi
+done 
+echo "Dotfiles copied"
+
+echo "Copying vim config dir"
+cp -Rf "${HOME}/.vim" "${HOME}/sonjiku-git/sonjiconf/home" 
+rm -Rf "${HOME}/sonjiku-git/sonjiconf/home/.vim/plugged"
+echo "Vim config dir copied"
+
+echo "Copying skriptz"
+cp -Rfv "${HOME}/.bin" "${HOME}/sonjiku-git/sonjiconf/scripts"
+echo "Skriptz copied"
+
+echo "Copying config folder files"
+cp -Rf "${HOME}/.config" "${HOME}/sonjiku-git/sonjiconf/home" ;
+for i in PCSX2 VSCodium; do
+	if [ -d "${HOME}/sonjiku-git/sonjiconf/home/.config/${i}" ]; then
+		rm -rf "${HOME}/sonjiku-git/sonjiconf/home/.config/${i}"
+	fi
+done 
+mopidy config >"${HOME}/sonjiku-git/sonjiconf/home/.config/mopidy/mopidy.conf" 2>&1 
+echo "Config folder copied"

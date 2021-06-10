@@ -1,0 +1,103 @@
+#!/bin/sh
+########################################
+#       B A S H    A L I A S E S       #
+########################################
+
+################
+# shell ALIASES #
+################
+# Merge shell config files
+		alias mergebrc="cp ~/.profile ~/.shellrc"
+# Quick Edits
+		alias edbshp="vim ~/.shell_profile"
+		alias edbshrc="vim ~/.shellrc"
+		alias edbsha="vim ~/.config/shell/aliases"
+		alias edbshf="vim ~/.config/shell/functions"
+		alias edbshv="vim ~/.config/shell/vars"
+		alias edvrc="vim ~/.vimrc"
+		alias edgti="vim ~/.gitignore"
+		alias edtm="vim ~/.tmux.conf"
+# Quick Internet Access
+		alias inet="firefox duckduckgo.com"
+
+
+###################
+# FILE MANAGEMENT #
+###################
+# Quick ls
+		alias dir="dir --color=auto"
+		alias vdir="vdir --color=auto --group-directories-first -ahF"
+		alias l="ls --color=auto -F"
+		alias la="l -a"
+# Quick cd
+		alias cdh="cd ~"
+		alias cdr="cd /"
+		alias cdconf="cd ~/.config"
+		alias cdcode="cd ~/Documents/Coding"
+		alias cdgr="cd ~/Documents/Groff"
+		alias cdsz="cd ~/.skriptz"
+		alias cdsd="cd /etc/systemd/system"
+		alias cde="cd /etc"
+		alias ..="cd .."
+		alias ...="cd .. ; cd .."
+		alias ....="cd .. ; cd .. ; cd .."
+# Quick FM
+		alias n="LC_COLLATE=C nnn"
+		alias rm="rm -iv"
+		alias cp="cp -iv"
+		alias mv="mv -iv"
+		alias umntphone="sudo fusermount -u ~/mnt"
+		alias mntphone="sudo jmtpfs -o allow_other ~/mnt"
+# Quick Image
+		alias pngimgv='fbv -e `ls -tr `find . -name "*.png" -print``'
+		alias jpgimgv='fbv -e `ls -tr `find . -name "*.jpg" -print``'
+		alias imgv='fbv -e `ls `find . -name "*.jpg" -o -name "*.png" -print``'
+
+#######
+# GIT #
+#######
+alias gtss="git stash"
+alias gtst="git status --short --branch"
+alias gtd="git diff"
+alias gtdf="git difftool"
+alias gtl="git log"
+alias gtps="git push"
+alias gtpl="git pull"
+alias gtco="git checkout"
+alias gtcm="git commit"
+alias gtcl="git clone"
+alias gta="git add"
+alias gtr="git rm"
+alias gtm="git mv"
+alias gtt="git tag"
+alias gtb="git branch"
+alias gts="git svn"
+
+
+##########
+# SYSTEM #
+##########
+# Quit
+		alias q="exit"
+# Temp
+		alias stemp="cat /sys/class/thermal/thermal_zone0/temp"
+# Free space
+		alias df="df -h"
+		alias free="free -h"
+
+##########
+# PACMAN #
+##########
+		alias pacupgrd='pacman -Syu'
+		alias pacccache='pacman -Sc'
+		alias pacins='pacman -S'
+		alias pacrm='pacman -Rns'
+
+#############
+# COMPILING #
+#############
+## GROFF
+		# Quick ps to png
+		alias ps2png="gs -dNOPAUSE -dBATCH -sDEVICE=png16m -r120x120 -sOutputFile='ps-%d.png'"
+		# Quick ms to ps
+		alias gmsps="groff -m ms -T ps"

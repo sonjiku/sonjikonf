@@ -1,0 +1,23 @@
+#!/bin/sh
+. "${HOME}/.cache/wal/colors.sh"
+export PBAR_L_SONG="%{F$color12}%title%%{F-} %{F$color11}by%{F-} %{F$color4}%artist%%{F-}"
+export PBAR_L_MROOT="%{F$color11}%percentage_used%%%{F-}  %{F$color9}ﲂ%{F-}"
+export PBAR_L_UROOT="%{F$color11}Not Mounted%{F-}  %{F$color9}ﲂ%{F-} "
+export PBAR_L_MHOME="%{F$color11}%percentage_used%%%{F-}  %{F$color9}%{F-} "
+export PBAR_L_UHOME="%{F$color11}Not Mounted%{F-}  %{F$color9}%{F-} "
+
+# Terminate other instances
+killall -q polybar
+
+# Wait till proccesses dead
+while pgrep -x "polybar" >/dev/null; do sleep 1; done
+
+# Terminate other instances
+killall -q polybar
+
+# Wait till proccesses dead
+while pgrep -x "polybar" >/dev/null; do sleep 1; done
+
+# Launch polybar
+polybar -l warning main & 
+polybar -l warning music & 

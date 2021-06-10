@@ -1,0 +1,41 @@
+#!/bin/sh
+
+#########################
+#     APP  DEFAULTS     #
+#########################
+	## D E F A U L T S
+	export LMKFL=`date +%H%S%U%M`
+	export TERMINAL=alacritty
+	export EDITOR=nvim
+	export BROWSER=firefox
+	export PAGER=less
+	export VISUAL=$EDITOR
+	export GPG_TTY=$(tty)
+	## LESS
+	# Less colored output
+	export LESS_TERMCAP_mb=$'\E[01;31m'
+	export LESS_TERMCAP_md=$'\E[01;31m'
+	export LESS_TERMCAP_me=$'\E[0m'
+	export LESS_TERMCAP_se=$'\E[0m'
+	export LESS_TERMCAP_so=$'\E[01;44;33m'
+	export LESS_TERMCAP_ue=$'\E[0m'
+	export LESS_TERMCAP_us=$'\E[01;32m'
+	# Less Defaults
+	export LESSHISTFILE="${HOME}/.hist/less"
+	export LESSHISTSIZE=1000
+	# FZF
+	export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
+	export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+	## N N N
+	export NNN_OPTS="cdeEHU"
+	export NNN_USE_EDITOR=1	
+	export NNN_COLORS="1236"
+	export NNN_FCOLORS="060b040a00050e0809020d01"
+	export NNN_OPENER="${HOME}/.config/nnn/plugins/nuke"
+	export NNN_BMS="d:${HOME}/Documents;D:${HOME}/Downloads;c:${HOME}/.config;b:${HOME}/.bin"
+	export NNN_PLUG='p:preview-tui-ext;d:dups;u:getplugs;r:gutenread;t:imgthumb;I:ipinfo;P:pdfview;e:suedit;w:uidgid;i:imgview;x:_chmod +x $nnn;g:_git log;f:-_|firefox $nnn'
+	export NNN_FIFO="${HOME}/.tmp/nnn.fifo"
+	## KUNST
+	export KUNST_MUSIC_DIR="${HOME}/Music"
+	export KUNST_POSITION="+0+0"
+	export KUNST_SIZE="500x500"

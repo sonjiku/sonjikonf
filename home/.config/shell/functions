@@ -1,0 +1,98 @@
+#!/bin/bash
+
+#########################
+#   F U N C T I O N S   #
+#########################
+# Get git branch. Used by prompt
+gitBranch() {
+	export gitbranch="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+}
+
+gitRemoteChange() {
+	if [ $# -eq 0 ]
+	then
+    	find sonja-22.git/**/.git/ -name config -type f -type f -exec sed -i -e 's/https:\/\/.*github\.com\/.*\//https:\/\/sonjiku@github\.com\/sonjiku\//g' {} \;
+		find sonja-22.git/**/.git/ -name config -type f -exec grep -i 'github' {} \;
+	elif [ -z "$2" ] && [ "$1" == "-r" ]
+	then
+    	find sonja-22.git/**/.git/ -name config -type f -type f -exec sed -i -e 's/https:\/\/.*@github\.com\/sonjiku\//https:\/\/github\.com\/sonjiku\//g' {} \;
+		find sonja-22.git/**/.git/ -name config -type f -exec grep -i 'github' {} \;
+	elif [ -z "$2" ]
+	then
+		find $1 -name config -type f -type f -exec sed -i -e "s/https:\/\/.*github\.com\/.*\//https:\/\/sonjiku@github\.com\/sonjiku\//g" {} \;
+		find $1 -name config -type f -exec grep -i 'github' {} \;
+	elif [ -z "$3" ] && [ "$1" == "-r" ]
+	then
+		find sonja-22.git/**/.git/ -name config -type f -type f -exec sed -i -e "s/https:\/\/$2@github\.com/https:\/\/github\.com/g" {} \;
+		find sonja-22.git/**/.git/ -name config -type f -exec grep -i 'github' {} \;
+	elif [ -z "$3" ]
+	then
+		find $1 -name config -type f -type f -exec sed -i -e "s/https:\/\/.*github\.com\/.*\//https:\/\/$2@github\.com\/$2\//g" {} \;
+		find $1 -name config -type f -exec grep -i 'github' {} \;
+	elif [ -z "$4" ] && [ "$1" != "-r" ]
+	then
+		find $2 -name config -type f -type f -exec sed -i -e "s/https:\/\/$3@github\.com/https:\/\/github\.com/g" {} \;
+		find $2 -name config -type f -exec grep -i 'github' {} \;
+	else
+		echo "You did something wrong. Probably added too many arguments."
+	fi
+}
+
+# Making files based on templates
+mkfl() {		
+	if [[ $1 =~ .+\.c$ && ! $1 =~ ' ' && ! $1 =~ \..+\.  ]];
+	then
+		echo "Creating C file from template..."		
+		cp ~/.templates/cmain.c $1;
+	elif [[ $1 =~ .+\.h$ && ! $1 =~ ' ' && ! $1 =~ \..+\. ]]; 
+	then
+		echo "Creating  C header file from template..."
+		cp ~/.templates/cheader.h $1;
+	elif [[ $1 =~ .+\.tr$ && ! $1 =~ ' ' && ! $1 =~ \..+\. ]]; 
+	then
+		echo "Creating ms Groff document from temlate..."
+		cp ~/.templates/groff.ms $1;
+	elif [[ $1 =~ .+\.ms$ && ! $1 =~ ' ' && ! $1 =~ \..+\. ]];
+	then
+		echo "Creating ms Groff document with reference from temlate..."
+		cp ~/.templates/groffref.ms $1;
+	else
+		echo "Try again with better arguments dumbass";
+	fi
+}
+
+# Make project directories
+mkprjct() {
+	if [ "$1" =~ "^c$" ];
+	then
+		echo "Making a C project template..."
+		export LMKFL=Project`date +%H%S%U%M`;
+		mkdir $LMKFL;
+		cd $LMKFL;
+		cp ~/.templates/cmain.c main.c;
+	elif [ "$1" =~ "^ms$" ]
+	then
+		echo "Making a Groff ms project template..."
+		export LMKFL=Project`date +%H%S%U%M`;
+		mkdir $LMKFL;
+		cd $LMKFL;
+		cp ~/.templates/groff.ms ms.tr;
+	else
+		echo "Try again with better arguments dumbass";
+	fi
+}
+
+# Groff to ps converter
+#gmps() {
+#
+#	if [ $1 =~ ^u$ && $2 =~ .+\.(tr|ms|troff)$ &&  $3 =~ .+\.ps$ ]];
+#	then
+#		groff -Kutf8 -mms -Tps $2 > $3;
+#	elif [[ $1 =~ .+\.(tr|ms|troff)$ &&  $2 =~ .+\.ps$ ]];
+#	then
+#		groff -mms -Tps $2 > $3;
+#	else
+#		echo "Try again with better arguments dumbass";
+#	fi	
+#}
+

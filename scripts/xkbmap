@@ -1,0 +1,5 @@
+#!/bin/sh
+
+localectl set-x11-keymap us,gr,ru grp:alt_shift_toggle,caps:escape,eurosign:e,compose:ralt
+setxkbmap -option caps:escape
+setxkbmap -layout us,gr,ru -option grp:alt_shift_toggle eurosign:e compose:ralt

@@ -1,0 +1,34 @@
+# Mute
+"blvolch vol -t"
+	XF86AudioMute 
+# Increase volume
+"blvolch vol -i"
+   XF86AudioRaiseVolume
+
+# Decrease volume
+"blvolch vol -d"
+   XF86AudioLowerVolume
+   
+# Prev Track
+"mpc prev"
+   XF86AudioPrev
+   
+# Toggle pause
+"mpc toggle"
+   XF86AudioPlay
+   
+# Next Track
+"mpc next"
+   XF86AudioNext
+   
+# Backlight brighter
+"blvolch bl -i"
+   XF86MonBrightnessUp
+   
+# Backlight dimmer
+"blvolch bl -d"
+   XF86MonBrightnessDown
+
+# Disable touchpad
+"sleep 0.1 && toggle_touchpad"
+   mod4+F5

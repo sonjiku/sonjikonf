@@ -1,0 +1,414 @@
+# COLORS
+set_from_resource $background background
+set_from_resource $foreground background
+set_from_resource $fg0 color0
+set_from_resource $fg1 color1
+set_from_resource $fg2 color2
+set_from_resource $fg3 color3
+set_from_resource $fg4 color4
+set_from_resource $fg5 color5
+set_from_resource $fg6 color6
+set_from_resource $fg7 color7
+set_from_resource $fg8 color8
+set_from_resource $fg9 color9
+set_from_resource $fg10 color10
+set_from_resource $fg11 color11
+set_from_resource $fg12 color12
+set_from_resource $fg13 color13
+set_from_resource $fg14 color14
+set_from_resource $fg15 color15
+set_from_resource $bg0 color0_beta
+set_from_resource $bg1 color1_beta
+set_from_resource $bg2 color2_beta
+set_from_resource $bg3 color3_beta
+set_from_resource $bg4 color4_beta
+set_from_resource $bg5 color5_beta
+set_from_resource $bg6 color6_beta
+set_from_resource $bg7 color7_beta
+set_from_resource $bg8 color8_beta
+set_from_resource $bg9 color9_beta
+set_from_resource $bg10 color10_beta
+set_from_resource $bg11 color11_beta
+set_from_resource $bg12 color12_beta
+set_from_resource $bg13 color13_beta
+set_from_resource $bg14 color14_beta
+set_from_resource $bg15 color15_beta
+# WORKSPACE NAMES
+set $ws0 scratchpad
+set $ws1 1: 
+set $ws2 2: 
+set $ws3 3: 
+set $ws4 4: 
+set $ws5 5: 
+set $ws6 6: 
+set $ws7 7: 
+set $ws8 8: 
+set $ws9 9: ﱘ
+set $ws10 10: 漣
+# VARS
+set $term alacritty
+## mod key
+set $Mod Mod4
+
+
+
+#########################################
+#                                       #
+#      I N I T I A L I Z A T I O N      #
+#                                       #
+#########################################
+
+
+
+
+## FONT
+font pango:Anonymice Nerd Font
+
+
+## GAPS
+smart_gaps on
+gaps inner 10			# SET INNER GAPS
+hide_edge_borders both
+for_window [class=".*"] border pixel 1
+
+## DEFAULT NEW CONTAINER ORIENTATION
+default_orientation auto
+## DEFAULT WORKSPACE LAYOUT
+workspace_layout default
+# MOUSE FOCUS
+focus_follows_mouse no		
+# DRAGGING CONTAINERS 
+floating_modifier $Mod		
+# DRAGGING CONTAINERS 
+
+## COLORS
+client.focused          $bg13 $bg13 $foreground $fg15 $bg13
+client.focused_inactive $bg0 $bg0 $foreground $bg0 $bg0
+client.unfocused        $bg0 $bg0 $foreground $bg0 $bg0
+client.urgent           $bg9 $fg9 $foreground $fg9 $fg9
+
+## WORKSPACE AUTO BACK AND FORTH
+#workspace_auto_back_and_forth yes
+
+
+# Floats
+for_window [window_role="About"] floating enable
+for_window [class="QjackCtl"] floating enabled
+for_window [class="PavuControl"] floating enabled
+for_window [instance="Kunst"] floating enabled
+for_window [title="ncmpcpp"] floating enabled
+
+
+## STARTUP
+exec_always --no-startup-id alternating_layouts.py
+exec --no-startup-id xss-lock -l i3translock
+exec_always --no-startup-id pbar
+exec_always --no-startup-id dunstar
+exec_always --no-startup-id cmstar
+
+
+#########################
+#                       #
+#       M O U S E       #
+#                       #
+#########################
+bindsym $Mod+Up exec xdotool mousemove_relative -- 0 -15
+bindsym $Mod+Down exec xdotool mousemove_relative -- 0 15
+bindsym $Mod+Left exec xdotool mousemove_relative -- -15 0
+bindsym $Mod+Right exec xdotool mousemove_relative -- 15 0
+bindsym $Mod+Control+Up exec xdotool mousemove_relative -- 0 -100
+bindsym $Mod+Control+Down exec xdotool mousemove_relative -- 0 100
+bindsym $Mod+Control+Left exec xdotool mousemove_relative -- -100 0
+bindsym $Mod+Control+Right exec xdotool mousemove_relative -- 100 0
+bindsym $Mod+Mod1+Up exec xdotool click 2
+bindsym $Mod+Mod1+Down exec xdotool click 2
+bindsym $Mod+Mod1+Left exec xdotool click 1
+bindsym $Mod+Mod1+Right exec xdotool click 3
+
+
+
+#########################################
+#                                       #
+#       A P P   L A U N C H I N G       #
+#                                       #
+#########################################
+
+
+## TERMINAL
+bindsym $Mod+Return workspace $ws1 ; exec $term
+bindsym $Mod+t exec $term
+bindsym $Mod+Shift+t exec xterm
+
+## SCREENSHOT
+bindsym $Mod+Print exec scrot -e 'mv $f ~/Pictures/screenshots/' 
+
+
+##  Launcher
+bindsym $Mod+p	exec rofi -show run
+bindsym $Mod+e	exec rofi -show emoji
+# RELOAD CONFIG
+bindsym $Mod+r	exec i3 reload
+# QUICK RESTART	
+bindsym $Mod+Shift+r exec i3 restart
+# QUIT	
+bindsym $Mod+Escape exec rofi -show p -modi p:~/.config/rofi/scripts/rofi-power-menu -width 20 -lines 6
+
+
+
+#########################################
+#                                       #
+#          C O N T A I N E R S          #
+#                                       #
+#########################################
+
+# KILL CONTAINER
+bindsym $Mod+Mod1+Delete kill
+
+# CHANGE FOCUS
+bindsym $Mod+h focus left
+bindsym $Mod+j focus down
+bindsym $Mod+k focus up
+bindsym $Mod+l focus right
+
+# move focused window
+bindsym $Mod+Shift+h move left
+bindsym $Mod+Shift+j move down
+bindsym $Mod+Shift+k move up
+bindsym $Mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $Mod+s split toggle
+
+# enter fullscreen mode for the focused container
+bindsym $Mod+f fullscreen toggle
+bindsym $Mod+Shift+s sticky toggle
+
+# LAYOUT CHANGE
+bindsym $Mod+w layout toggle all
+# FOCUS PARENT 
+bindsym $Mod+a focus parent
+# FOCUS CHILD 
+bindsym $Mod+Shift+a focus child
+
+# toggle tiling / floating
+bindsym $Mod+Shift+f floating toggle
+
+# change focus between tiling / floating windows
+bindsym $Mod+Mod1+f focus mode_toggle
+
+
+#######################################
+#                                     #
+#         W O R K S P A C E S         #
+#                                     #
+#######################################
+
+
+# Workspace assignments
+assign [class="Steam"] workspace number $ws6
+assign [instance="cmst"] workspace number $ws10
+assign [class="QjackCtl"] workspace number $ws9
+assign [instance="Kunst"] workspace number $ws9
+assign [title="ncmpcpp"] workspace number $ws9
+assign [class="GLava"] workspace number $ws9
+
+# Workspace view
+bindsym $Mod+1 workspace number $ws1 
+bindsym $Mod+2 workspace number $ws2 
+bindsym $Mod+3 workspace number $ws3 
+bindsym $Mod+4 workspace number $ws4 
+bindsym $Mod+5 workspace number $ws5 
+bindsym $Mod+6 workspace number $ws6 
+bindsym $Mod+7 workspace number $ws7 
+bindsym $Mod+8 workspace number $ws8
+bindsym $Mod+9 workspace number $ws9 
+bindsym $Mod+0 workspace number $ws10 
+bindsym $Mod+minus $ws0 show
+
+
+# Container moving
+bindsym $Mod+Shift+1 move container to workspace number $ws1 
+bindsym $Mod+Shift+2 move container to workspace number $ws2 
+bindsym $Mod+Shift+3 move container to workspace number $ws3 
+bindsym $Mod+Shift+4 move container to workspace number $ws4 
+bindsym $Mod+Shift+5 move container to workspace number $ws5 
+bindsym $Mod+Shift+6 move container to workspace number $ws6 
+bindsym $Mod+Shift+7 move container to workspace number $ws7 
+bindsym $Mod+Shift+8 move container to workspace number $ws8
+bindsym $Mod+Shift+9 move container to workspace number $ws9 
+bindsym $Mod+Shift+0 move container to workspace number $ws10 
+bindsym $Mod+Shift+minus move $ws0
+
+
+
+
+
+
+
+
+#####################################
+#                                   #
+#             M O D E S             #
+#                                   #
+#####################################
+
+
+## i3 MANAGEMENT MODE
+bindsym $Mod+Shift+c mode "Configs"
+mode "Configs" {
+# EDIT CONFIGS
+	bindsym $Mod+i workspace number $ws3 ; exec $term -e $EDITOR ~/.config/i3/config ; mode "default"
+		bindsym $Mod+m workspace number $ws3 ; exec $term -e $EDITOR ~/.config/mpd/mpd.conf ; mode "default"
+		bindsym $Mod+n workspace number $ws3 ; exec $term -e $EDITOR ~/.config/ncmpcpp/config ; mode "default"
+		bindsym $Mod+p workspace number $ws3 ; exec $term -e $EDITOR ~/.profile ; mode "default"
+		bindsym $Mod+Shift+p workspace number $ws3 ; exec $term -e $EDITOR ~/.config/polybar/config ; mode "default"
+		bindsym $Mod+t workspace number $ws3 ; exec $term -e $EDITOR ~/.tmux.conf ; mode "default"
+		bindsym $Mod+v workspace number $ws3 ; exec $term -e $EDITOR ~/.vimrc ; mode "default"
+		bindsym $Mod+x workspace number $ws3 ; exec $term -e $EDITOR ~/.xprofile ; mode "default"
+		bindsym $Mod+Shift+x workspace number $ws3 ; exec $term -e $EDITOR ~/.Xresources ; mode "default"
+
+# NORMAL MODE
+		bindsym Escape mode "default"	
+		bindsym $Mod+Shift+c mode "default"
+		bindsym $Mod+Shift+Return mode "Launcher"
+		bindsym $Mod+Control+a mode "Audio"
+		bindsym $Mod+Control+g mode "Resize"
+}
+
+## APP LAUNCHER MODE
+bindsym $Mod+Shift+Return mode "Launcher"
+mode "Launcher" {
+# KILL CONTAINER
+	bindsym $Mod+Mod1+Delete kill
+
+## A P P  L A U N C H I N G
+
+# TUI
+		bindsym $Mod+h workspace number $ws10 ; exec $term -e htop ; mode "default"
+	bindsym $Mod+f workspace number $ws2 ; exec $term -e bash -c "LC_COLLATE=C nnn" ; mode "default"
+	bindsym $Mod+e workspace number $ws3 ; exec $term -e $EDITOR; mode "default"
+	bindsym $Mod+m workspace number $ws10 ; exec $term -e alsamixer ; mode "default"	
+	bindsym $Mod+p exec $term -e ncmpcpp ; mode "default"	
+	bindsym $Mod+Shift+p exec kunst ; mode "default"	
+	# GUI
+	bindsym $Mod+i workspace number $ws4 ; exec firefox ; mode "default"
+	bindsym $Mod+Shift+i workspace number $ws10 ; exec cmst ; mode "default"
+	bindsym $Mod+Shift+m workspace number $ws10 ; exec pavucontrol ; mode "default"	
+	bindsym $Mod+w workspace number $ws5 ; exec sxiv /usr/share/pixmaps/Wallpapers/; mode "default"
+
+	# SUDO PRIVILAGES
+	bindsym $Mod+Mod1+F workspace number $ws2 ; exec $term -e bash -c "sudo LC_COLLATE=C nnn" ; mode "default"
+	
+	# NORMAL MODE
+	bindsym Escape mode "default"
+	bindsym $Mod+Shift+Return mode "default"
+	bindsym $Mod+Control+a mode "Audio"
+	bindsym $Mod+Control+g mode "Resize"
+	bindsym $Mod+Shift+c mode "Configs"
+}
+
+
+## AUDIO ADJUST MODE
+bindsym $Mod+Control+a mode "Audio"
+mode "Audio" {
+	## AMIXER COMMANDS
+	# MUTE TOGGLE
+	bindsym $Mod+Mod1+space exec pulsemixer --toggle-mute
+	# VOLUME UP
+	bindsym $Mod+Up exec pulsemixer --change-volume 2
+	# VOLUME DOWN
+	bindsym $Mod+Down exec pulsemixer --change-volume -2
+	# PREV TRACK
+	bindsym $Mod+Left exec mpc prev
+	# NEXT TRACK
+	bindsym $Mod+Right exec mpc next
+	# PAUSE/START
+	bindsym $Mod+space exec mpc toggle
+	# SEEK BACKWARDS
+	bindsym $Mod+Mod1+Left exec mpc seek -10
+	# SEEK FORWARDS
+	bindsym $Mod+Mod1+Right exec mpc seek +10
+
+
+	# NORMAL MODE
+	bindsym Escape mode "default"
+	bindsym $Mod+Control+a mode "default"
+	bindsym $Mod+Shift+Return mode "Launcher"
+	bindsym $Mod+Control+g mode "Resize"
+	bindsym $Mod+Shift+c mode "Configs"
+}
+
+## RESIZE MODE
+bindsym $Mod+Control+g mode "Resize"
+mode "Resize" {
+    ## rONTAINERS
+	# RGSIZE
+    bindsym h resize shrink width 20 px or 20 ppt
+    bindsym j resize shrink height 20 px or 20 ppt
+    bindsym k resize grow height 20 px or 20 ppt
+    bindsym l resize  grow width 20 px or 20 ppt
+
+	## GAPS
+	# RESET
+	bindsym $Mod+Equal gaps inner all set 0; gaps outer all set 0
+	# OUTER GAPS
+	bindsym $Mod+Up gaps outer current plus 5
+	bindsym $Mod+Down gaps outer current minus 5
+	# INNER GAPS
+	bindsym $Mod+Left gaps inner current minus 5
+	bindsym $Mod+Right gaps inner current plus 5
+	# CURRENT WINDOW GAPS
+	bindsym $Mod+Mod1+Up gaps bottom current plus 15
+	bindsym $Mod+Mod1+Down gaps top current plus 15
+	bindsym $Mod+Mod1+Right gaps left current plus 15
+	bindsym $Mod+Mod1+Left gaps right current plus 15
+
+	bindsym $Mod+Shift+Up gaps top current minus 15
+	bindsym $Mod+Shift+Down gaps bottom current minus 15
+	bindsym $Mod+Shift+Right gaps right current minus 15
+	bindsym $Mod+Shift+Left gaps left current minus 15
+
+	# NORMAL MODE
+	bindsym Escape mode "default"	
+	bindsym $Mod+Control+g mode "default"
+	bindsym $Mod+Shift+Return mode "Launcher"
+	bindsym $Mod+Control+a mode "Audio"
+	bindsym $Mod+Shift+c mode "Configs"
+}
+
+
+
+#####################################
+#                                   #
+#              B  A  R              #
+#                                   #
+#####################################
+
+
+#bindsym $Mod+b bar mode toggle
+#bar {
+#	id bar-1
+#	i3bar_command i3bar --transparency
+#	status_command i3blocks
+#	mode dock
+#	hidden_state hide
+#	modifier none
+#
+#	position top
+#	font pango:NotoSans Nerd Font Bold 12
+#	strip_workspace_numbers yes
+#	tray_output primary
+#	colors {
+#		background $bg0
+#		statusline $fg15
+#		separator $bg0
+#
+#		focused_workspace  $bg0 $bg0 $fg15
+#        active_workspace   $bg0 $bg0 $fg7
+#        inactive_workspace $bg0 $bg0 $fg8
+#        urgent_workspace   $bg0 $bg0 $fg9
+#        binding_mode       $bg0 $bg0 $fg11
+#	}
+#}
+
+# vim:filetype=i3

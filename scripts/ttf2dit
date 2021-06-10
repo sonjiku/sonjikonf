@@ -1,0 +1,92 @@
+#!/bin/sh
+Ditnamechange () {
+	if echo $1 | grep -q "BoldOblique"; then
+		if echo $1 | grep -q "^-"; then
+			mv $1 "$(echo "$1" | sed -E "s:BoldOblique:BI:g")"
+		else
+			mv $1 "$(echo "$1" | sed -E "s:-BoldOblique:BI:g")"
+		fi
+	elif echo $1 | grep -q "BoldItalic"; then
+		if echo $1 | grep -q "^-"; then
+			mv $1 "$(echo "$1" | sed -E "s:BoldItalic:BI:g")"
+		else
+			mv $1 "$(echo "$1" | sed -E "s:-BoldItalic:BI:g")"
+		fi
+	elif echo $1 | grep -q "Italic"; then
+		if echo $1 | grep -q "^-"; then
+			mv $1 "$(echo "$1" | sed -E "s:Italic:I:g")"
+		else
+			mv $1 "$(echo "$1" | sed -E "s:-Italic:I:g")"
+		fi
+	elif echo $1 | grep -q "Oblique"; then
+		if echo $1 | grep -q "^-"; then
+			mv $1 "$(echo "$1" | sed -E "s:Oblique:I:g")"
+		else
+			mv $1 "$(echo "$1" | sed -E "s:-Oblique:I:g")"
+		fi
+	elif echo $1 | grep -q "Bold"; then
+		if echo $1 | grep -q "^-"; then
+			mv $1 "$(echo "$1" | sed -E "s:Bold:B:g")"
+		else
+			mv $1 "$(echo "$1" | sed -E "s:-Bold:B:g")"
+		fi
+	else
+		if [ -d "$1" ]; then
+			echo "yayyy"
+		else
+			mv $1 "${1}R"
+		fi
+	fi
+}
+
+if [ "$#" = "1" ]; then
+	if [ -d "$1" ]; then
+		ex=""
+		if [ ! -d "$1/afm" ]; then
+			mkdir "$1/afm"
+		else
+			ex="${ex}1"
+		fi
+		if [ ! -d "$1/dit" ]; then
+			mkdir "$1/dit"
+		else
+			ex="${ex}2"
+		fi
+		if [ ! -d "$1/pt1" ]; then
+			mkdir "$1/pt1"
+		else
+			ex="${ex}3"
+		fi
+		if [ "$ex" = "123" ]; then
+			exit
+		fi
+
+		if echo "$ex" | grep -vq "1" ; then
+			find "$1" -name "*ttf" -exec sh -c 'file=$1 ; ttf2afm ./"$file" -o "$2/afm/$(basename $file .ttf)"' _ {} $1 \;
+		fi
+		if echo "$ex" | grep -vq "2" ; then
+			find "$1" -name "*ttf" -exec sh -c 'file=$1 ; afmtodit "$2/afm/$(basename $file .ttf)" textmap "$2/dit/$(basename $file .ttf)"' _ {} $1 \;
+			for item in $(find "$1/dit"); do 
+				Ditnamechange "${item}"
+			done
+		fi
+		if echo "$ex" | grep -vq "3" ; then
+			find "$1" -name "*ttf" -exec sh -c 'file=$1 ; ttf2pt1 ./"$file"' _ {} $1 \;
+			find "$1" -name "*t1a" -exec sh -c 'file=$1 ; mv ./"$file" "$2/pt1/$(basename $file .t1a)"' _ {} $1 \;
+			find "$1" -name "*afm" -type f -exec rm {} \;
+		fi
+
+	elif [ -f "$1" ]; then
+		ttf2afm "$1" "$(basename "$1" .ttf)"
+		if echo "$1" | grep -q BoldItalic || echo "$1" | grep -q BoldOblique ; then
+			afmtodit "$(basename "$1" .ttf)" "$(basename "$1" BoldItalic)BI"
+		elif echo "$1" | grep -q Bold ; then
+			afmtodit "$(basename "$1" .ttf)" "$(basename "$1" BoldItalic)B"
+		elif echo "$1" | grep -q Italic || echo "$1" | grep -q Oblique ; then
+			afmtodit "$(basename "$1" .ttf)" "$(basename "$1" BoldItalic)I"
+		else
+			afmtodit "$(basename "$1" .ttf)" "${1}R"
+		fi
+	fi
+fi
+

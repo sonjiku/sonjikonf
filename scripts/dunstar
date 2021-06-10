@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. ${HOME}/.cache/wal/colors.sh
+# Terminate other instances
+killall -q dunst
+
+# Wait till proccesses dead
+while pgrep -x "dunst" >/dev/null; do sleep 1; done
+
+#Wait till polybar reboots
+
+# Launch dunst
+dunst -lb "background" -lf "$foreground" -lh "$foreground" -lfr "$foreground" -nb "$background" -nf "$color9" -nfr "$color9" -nh "$color9" -cb "$background" -cf "$foreground" -cfr "$foreground" -ch "$foreground" &
+
